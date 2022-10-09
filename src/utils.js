@@ -1,5 +1,3 @@
-//CURRENT TEMP, FEELS LIKE, HUMIDITY, CHANCE OF RAIN, WIND, CONDITION, DATE,
-//WEEK MIN/MAX TEMP, CONDITION
 import fromUnixTime from 'date-fns/fromUnixTime';
 
 function formatDate(unix, offset, dateFormat = 'full') {
@@ -52,8 +50,8 @@ function formatDate(unix, offset, dateFormat = 'full') {
 }
 
 function proccessData(data) {
-    let current = currentWeather(data);
-    let forecast = weatherForecast(data);
+    const current = currentWeather(data);
+    const forecast = weatherForecast(data);
     return { current, forecast };
 }
 
@@ -77,22 +75,23 @@ function currentWeather(data) {
         rainChance: `${data.daily[0].pop * 100}%`,
         wind: data.current.wind_speed * 3.6,
         condition: data.current.weather[0].main,
+        icon: data.current.weather[0].icon,
         date: formatDate(data.current.dt, 0)
     };
 }
 
 function weatherForecast(data) {
-    let forecast = [];
+    const forecast = [];
     for (let day in data.daily) {
         forecast.push({
             mintemp: Math.round(data.daily[day].temp.min),
             maxtemp: Math.round(data.daily[day].temp.max),
             condition: data.daily[day].weather[0].main,
+            icon: data.daily[day].weather[0].icon,
             date: formatDate(data.daily[day].dt, 0, 'day')
         });
     }
-    console.log(data.daily);
-    console.log(forecast);
+    return forecast;
 }
 
 export { formatDate, getCoords, proccessData };
