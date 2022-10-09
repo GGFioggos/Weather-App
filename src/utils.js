@@ -49,7 +49,7 @@ function formatDate(unix, offset, dateFormat = 'full') {
     return `${dayOfWeek}, ${dayOfMonth}${suffix} ${month} '${year}`;
 }
 
-function proccessData(data) {
+function processData(data) {
     const current = currentWeather(data);
     const forecast = weatherForecast(data);
     return { current, forecast };
@@ -94,4 +94,4 @@ function weatherForecast(data) {
     return forecast;
 }
 
-export { formatDate, getCoords, proccessData };
+export { formatDate, getCoords, processData };
