@@ -5,13 +5,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <script src="bundle.js" defer></script>
     <link rel="stylesheet" href="../src/style.css">
     <title>Weather App</title>
 </head>
 
 <body>
+    <div class="container">
+        <div class="top">
+            <div class="current-info">
+                <div class="city"></div>
+                <div class="description"></div>
+                <div class="date"></div>
+                <div class="time"></div>
+                <div class="temperature"></div>
+                <img class="testimg">
+                <div class="icon current-weather"></div>
+            </div>
+            <div class="search">
+                <input type="text" id="searchbar" placeholder="Search Location...">
+            </div>
+            <div class="current-stats">
+                <div class="feels-like">
+                    <div class="icon feels-like"></div>
+                    <div>
+                        <div>Feels Like</div>
+                        <div class="feels-like-temp"></div>
+                    </div>
+                </div>
+                <div class="humidity">
+                    <div class="icon humidity"></div>
+                    <div>
+                        <div>Humidity</div>
+                        <div class="humidity-value"></div>
+                    </div>
+                </div>
+                <div class="rain-chance">
+                    <div class="icon rain-chance"></div>
+                    <div>
+                        <div>Rain Chance</div>
+                        <div class="rain-chance-value"></div>
+                    </div>
+                </div>
+                <div class="wind-speed">
+                    <div class="icon wind-speed"></div>
+                    <div>
+                        <div>Wind Speed</div>
+                        <div class="wind-speed-value"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="forecast">
 
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
