@@ -34,7 +34,12 @@ function setupCurrentInfo(data) {
             today.getMinutes() < 10
                 ? '0' + today.getMinutes()
                 : today.getMinutes();
-        let currentSeconds = today.getSeconds();
+
+        let currentSeconds =
+            today.getSeconds() < 10
+                ? '0' + today.getSeconds()
+                : today.getSeconds();
+
         time.textContent =
             currentHours + ':' + currentMinutes + ':' + currentSeconds;
     }
