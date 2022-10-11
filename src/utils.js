@@ -61,10 +61,16 @@ async function getCoords(city) {
     );
     const weatherData = await response.json();
     const { coord } = weatherData;
-    coord.name = weatherData.name;
-    coord.country = weatherData.sys.country;
+    if (weatherData.message == 'city not found') {
+        handleError(weatherData.message);
+    } else {
+        document.querySelector('.error').textContent = '';
 
-    return { lat: coord.lat, lon: coord.lon };
+        coord.name = weatherData.name;
+        coord.country = weatherData.sys.country;
+
+        return { lat: coord.lat, lon: coord.lon };
+    }
 }
 
 function currentWeather(data) {
@@ -182,6 +188,12 @@ function getIcon(code) {
     }
 
     return '';
+}
+
+function handleError(message) {
+    const error = document.querySelector('.error');
+    message = message.charAt(0).toUpperCase() + message.slice(1);
+    error.textContent = message + '! Try again.';
 }
 
 export {
