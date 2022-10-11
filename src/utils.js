@@ -70,6 +70,7 @@ async function getCoords(city) {
 function currentWeather(data) {
     return {
         city: data.city,
+        timezone: data.timezone,
         temp: Math.round(data.current.temp),
         feels_like: Math.round(data.current.feels_like),
         humidity: data.current.humidity,
@@ -101,8 +102,8 @@ function filterCityName(city) {
         return city
             .replace(/(\s+$|^\s+)/g, '') // remove whitespace from begining and end of string
             .replace(/(,\s+)/g, ',') // remove any white space that follows a comma
-            .replace(/(\s+,)/g, ',') // remove any white space that preceeds a comma
-            .replace(/\s+/g, '+'); // replace any remaining white space with +, so it works in api call
+            .replace(/(\s+,)/g, ','); // remove any white space that preceeds a comma
+        // .replace(/\s+/g, '+'); // replace any remaining white space with +, so it works in api call
     }
 }
 
