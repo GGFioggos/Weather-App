@@ -2,6 +2,8 @@ import { getForecast } from './apistuff';
 import { filterCityName, getIcon } from './utils';
 import { citySelected } from './index';
 
+let interval = null;
+
 function setupPage(data) {
     setupSearchBar();
     setupCurrentInfo(data);
@@ -11,12 +13,7 @@ function setupPage(data) {
 
 function setupSearchBar() {
     const input = document.querySelector('#searchbar');
-    input.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            citySelected(filterCityName(input.value));
-            input.value = '';
-        }
-    });
+    input.addEventListener('keypress', setInputListener);
 }
 
 function setupCurrentInfo(data) {
@@ -27,24 +24,32 @@ function setupCurrentInfo(data) {
     const temperature = document.querySelector('.temperature');
     const currentWeatherIcon = document.querySelector('.icon.current-weather');
 
-    function displayTime() {
-        let today = new Date();
-        let currentHours = today.getHours();
+    function displayTime(timezone) {
+        let daytime_str = new Date().toLocaleString('en-US', {
+            timeZone: timezone
+        });
+        let date = new Date(daytime_str);
+
+        let currentHours = date.getHours();
         let currentMinutes =
-            today.getMinutes() < 10
-                ? '0' + today.getMinutes()
-                : today.getMinutes();
+            date.getMinutes() < 10
+                ? '0' + date.getMinutes()
+                : date.getMinutes();
 
         let currentSeconds =
-            today.getSeconds() < 10
-                ? '0' + today.getSeconds()
-                : today.getSeconds();
+            date.getSeconds() < 10
+                ? '0' + date.getSeconds()
+                : date.getSeconds();
 
         time.textContent =
             currentHours + ':' + currentMinutes + ':' + currentSeconds;
     }
-    displayTime();
-    setInterval(displayTime, 1000);
+    displayTime(data.current.timezone);
+
+    if (interval) clearInterval(interval); // CLEAR INTERVAL TO PREVENT DUPLICATE
+    interval = setInterval(function () {
+        displayTime(data.current.timezone);
+    }, 1000);
 
     currentWeatherIcon.innerHTML = getIcon(data.current.icon);
     city.textContent = data.current.city;
@@ -105,6 +110,17 @@ function setupForecast(data) {
         card.appendChild(weatherIcon);
 
         forecast.appendChild(card);
+    }
+}
+
+function setInputListener(event) {
+    const input = document.querySelector('#searchbar');
+    if (event.key === 'Enter') {
+        input.blur();
+        console.log('input:' + input.value);
+        console.log('filtered:' + filterCityName(input.value));
+        citySelected(filterCityName(input.value));
+        input.value = '';
     }
 }
 
