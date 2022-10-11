@@ -117,8 +117,6 @@ function setInputListener(event) {
     const input = document.querySelector('#searchbar');
     if (event.key === 'Enter') {
         input.blur();
-        console.log('input:' + input.value);
-        console.log('filtered:' + filterCityName(input.value));
         citySelected(filterCityName(input.value));
         input.value = '';
     }
